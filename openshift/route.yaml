@@ -1,0 +1,21 @@
+# http_store Route - exposes the service externally (OpenShift only)
+#
+# Customize before applying:
+#   - metadata.namespace: target namespace
+#   - spec.host: desired hostname (or remove for auto-generated)
+#   - spec.tls: set to {} for edge-terminated HTTPS, or remove for HTTP only
+#
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: http-store
+  labels:
+    app: http-store
+spec:
+  to:
+    kind: Service
+    name: http-store
+    weight: 100
+  port:
+    targetPort: http
+  wildcardPolicy: None

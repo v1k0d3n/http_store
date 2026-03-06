@@ -1,0 +1,43 @@
+# http_store Pod - serves ISO files via Apache httpd
+#
+# Customize before applying:
+#   - metadata.namespace: target namespace
+#   - spec.containers[0].image: use registry.access.redhat.com (no login) or registry.redhat.io
+#   - spec.containers[0].ports[0].containerPort: httpd listens on 8080 (do not change)
+#
+# Prerequisites:
+#   - PVC "http-store-pvc" must exist (apply pvc.yaml first)
+#   - For OpenShift: the default service account may need 'anyuid' SCC for runAsUser
+#     oc adm policy add-scc-to-user anyuid -z default -n <namespace>
+#
+apiVersion: v1
+kind: Pod
+metadata:
+  name: http-store
+  labels:
+    app: http-store
+spec:
+  securityContext:
+    runAsUser: 1001
+    runAsGroup: 0
+    fsGroup: 1001
+  containers:
+    - name: httpd
+      image: registry.access.redhat.com/ubi9/httpd-24:latest
+      ports:
+        - containerPort: 8080
+          name: http
+      volumeMounts:
+        - name: iso-data
+          mountPath: /var/www/html
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "50m"
+        limits:
+          memory: "256Mi"
+          cpu: "500m"
+  volumes:
+    - name: iso-data
+      persistentVolumeClaim:
+        claimName: http-store-pvc

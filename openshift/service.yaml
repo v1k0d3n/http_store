@@ -1,0 +1,20 @@
+# http_store Service - exposes the pod for in-cluster access and Routes
+#
+# Customize before applying:
+#   - metadata.namespace: target namespace
+#   - spec.ports[0].port: must match pod's containerPort (8080)
+#
+apiVersion: v1
+kind: Service
+metadata:
+  name: http-store
+  labels:
+    app: http-store
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    app: http-store

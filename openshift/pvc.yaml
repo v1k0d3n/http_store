@@ -1,0 +1,18 @@
+# http_store PersistentVolumeClaim
+#
+# Customize before applying:
+#   - metadata.namespace: target namespace (or remove to use current project)
+#   - spec.resources.requests.storage: PVC size (e.g., 10Gi, 50Gi, 100Gi)
+#
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: http-store-pvc
+  labels:
+    app: http-store
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
