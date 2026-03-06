@@ -16,7 +16,7 @@ podman pod create --name http-store -p $HTTP_PORT:8080
 podman run -dt --pod http-store --env-file environment \
     -v $HTTP_STORE_PATH:/var/www/html:z \
     --name httpd \
-    -d registry.redhat.io/ubi9/httpd-24:latest
+    -d registry.access.redhat.com/ubi9/httpd-24:latest
 
 #podman logs $?
 podman pod ps
