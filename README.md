@@ -11,6 +11,7 @@
   - [`/opt/http_store/environment`](./environment)
 
 - Requires [podman](https://podman.io/)
+- Uses [ubi9/httpd-24](https://catalog.redhat.com/software/containers/ubi9/httpd-24) from registry.redhat.io
 
 ## Start http_store (podman)
 
